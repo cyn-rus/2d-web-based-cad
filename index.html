@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <title>Architectural Plan App</title>
+    <link rel="stylesheet" href="style/index.css">
+</head>
+
+<body>
+    <main>
+        <h1 class='title'>Architectural Plan App</h1>
+        <div class='radio-buttons'>
+            <div class='shape-choice'>
+                <p>Shapes:</p>
+                <input type='radio' name='action' value='line'>Line
+                <input type='radio' name='action' value='square'>Square
+                <input type='radio' name='action' value='rectangle'>Rectangle
+                <input type='radio' name='action' value='polygon'>Polygon
+            </div>
+            <div class='action-choice'>
+                <p>Actions:</p>
+                <input type='radio' name='action' value='move'>Move Shapes
+                <input type='radio' name='action' value='resize'>Resize Line or Square
+                <input type='radio' name='action' value='color'>Change Polygon Color
+                <input type='color' value='#000000'>
+            </div>
+        </div>
+        <div>
+            <canvas id='gl-canvas' width='800' height='600'></canvas>
+        </div>
+    </main>
+</body>
+
+</html>
