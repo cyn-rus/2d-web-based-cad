@@ -12,6 +12,11 @@ const radioButtons = document.getElementsByTagName('input')
 gl.useProgram(program)
 gl.drawArrays(gl.LINES, 0, 2)
 
+// Array untuk menyimpan bentuk
+var rectanglesArray = new Rectangles()
+
+let mouseclicked = false
+
 for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].addEventListener('change', function() {
         
@@ -23,7 +28,20 @@ for (let i = 0; i < radioButtons.length; i++) {
                 // Square
                 break
             case 2:
-                // Rectangle
+                // Saat mouse diklik
+                canvas.addEventListener('mousedown', (e) => {
+                    mouseclicked = true
+                    x = -1 + 2*e.offsetX/canvas.width;
+                    y = -1 + 2*(canvas.height - e.offsetY)/canvas.height;
+
+                    rectanglesArray.start = [x,y]
+                    rectanglesArray.end = [x,y]
+
+                    // Render
+                })
+                canvas.addEventListener('mousemove', (e) => {
+                    // When mouse is clicked and dragged
+                })
                 break
             case 3:
                 // Polygon
