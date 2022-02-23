@@ -9,22 +9,12 @@
 
 const radioButtons = document.getElementsByTagName('input')
 
-const vertexBuffer = gl.createBuffer()
-gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
-gl.bufferData(gl.ARRAY_BUFFER, 8 * 200000, gl.STATIC_DRAW)
-const position = gl.getAttribLocation(program, 'position')
-gl.enableVertexAttribArray(position)
-gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
-
-const colorBuffer = gl.createBuffer()
-gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-gl.bufferData(gl.ARRAY_BUFFER, 8 * 200000, gl.STATIC_DRAW)
-const color = gl.getAttribLocation(program, 'color')
-gl.enableVertexAttribArray(color)
-gl.vertexAttribPointer(color, 2, gl.FLOAT, false, 0, 0)
+gl.useProgram(program)
+gl.drawArrays(gl.LINES, 0, 2)
 
 for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].addEventListener('change', function() {
+        
         switch (i) {
             case 0:
                 // Line
