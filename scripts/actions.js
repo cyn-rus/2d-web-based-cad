@@ -7,6 +7,8 @@
 // 7. Change Polygon Color
 // 8. Hex Color
 
+
+
 const radioButtons = document.getElementsByTagName('input')
 
 gl.useProgram(program)
@@ -14,6 +16,7 @@ gl.drawArrays(gl.LINES, 0, 2)
 // Array untuk menyimpan bentuk
 var rectanglesArray = new Rectangles()
 var linesArray = new Lines()
+var squaresArray = new Squares()
 
 let radioButtonId = 0
 let mouseclicked = false
@@ -23,6 +26,12 @@ for (let i = 0; i < radioButtons.length; i++) {
         console.log(i)
         radioButtonId = i
     })
+}
+
+function render() {
+    rectanglesArray.render()
+    linesArray.render()
+    squaresArray.render()
 }
 
 canvas.addEventListener('mousedown', (e) => {
@@ -38,6 +47,8 @@ canvas.addEventListener('mousedown', (e) => {
             break
         case 1:
             // Square
+            squaresArray.start = [x,y]
+            squaresArray.end = [x,y]
             break
         case 2:
             // Rectangle
@@ -64,8 +75,7 @@ canvas.addEventListener('mousedown', (e) => {
         default:
             // Change color ???
     }
-    rectanglesArray.render()
-    linesArray.render()
+    render()
 })
 
 canvas.addEventListener('mousemove', (e) => {
@@ -80,6 +90,7 @@ canvas.addEventListener('mousemove', (e) => {
                 break
             case 1:
                 // Square
+                squaresArray.end = [x,y]
                 break
             case 2:
                 // Rectangle
@@ -103,8 +114,7 @@ canvas.addEventListener('mousemove', (e) => {
             default:
                 // Change color ???
         }
-        rectanglesArray.render()
-        linesArray.render()
+        render()
     }
 })
 
@@ -122,6 +132,11 @@ canvas.addEventListener('mouseup', () => {
             break
         case 1:
             // Square
+            squaresArray.squares.push(squaresArray.create())
+            for (var i = 0; i < 4; ++i) {
+                squaresArray.cur_color.forEach(elmt => squaresArray.color.push(elmt))
+            }
+            squaresArray.start = []
             break
         case 2:
             // Rectangle
