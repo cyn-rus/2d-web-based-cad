@@ -11,7 +11,6 @@ const radioButtons = document.getElementsByTagName('input')
 
 gl.useProgram(program)
 gl.drawArrays(gl.LINES, 0, 2)
-
 // Array untuk menyimpan bentuk
 var rectanglesArray = new Rectangles()
 
@@ -19,7 +18,7 @@ let mouseclicked = false
 
 for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].addEventListener('change', function() {
-        
+        console.log(i)
         switch (i) {
             case 0:
                 // Line
@@ -28,6 +27,7 @@ for (let i = 0; i < radioButtons.length; i++) {
                 // Square
                 break
             case 2:
+                // RECTANGLE
                 // Saat mouse diklik
                 canvas.addEventListener('mousedown', (e) => {
                     mouseclicked = true
@@ -37,10 +37,26 @@ for (let i = 0; i < radioButtons.length; i++) {
                     rectanglesArray.start = [x,y]
                     rectanglesArray.end = [x,y]
 
-                    // Render
+                    rectanglesArray.render()
                 })
+                // When mouse is clicked and dragged
                 canvas.addEventListener('mousemove', (e) => {
-                    // When mouse is clicked and dragged
+                    if (mouseclicked == true){
+                        x = -1 + 2*e.offsetX/canvas.width;
+                        y = -1 + 2*(canvas.height - e.offsetY)/canvas.height;
+                        rectanglesArray.end = [x,y]
+                    }
+                    rectanglesArray.render()
+                })
+                // Saat tombol mouse diangkat
+                canvas.addEventListener('mouseup', (e) => {
+                    mouseclicked = false
+                    rectanglesArray.rectangles.push(rectanglesArray.create())
+                    for (var i = 0; i < 4; ++i){
+                        rectanglesArray.cur_color.forEach(elmt => rectanglesArray.color.push(elmt))
+                    }
+                    rectanglesArray.start = []
+                    rectanglesArray.end = []
                 })
                 break
             case 3:

@@ -3,6 +3,8 @@ const canvas = document.querySelector('#glCanvas')
 const gl = canvas.getContext('webgl')
 const vertices = []
 const color = []
+const vertexBuffer = gl.createBuffer()
+const colorBuffer = gl.createBuffer()
 
 function init() {
     if (!gl) throw new Error("This web browser doesn't support WebGL!") 
@@ -73,14 +75,12 @@ function createBuffer() {
         0.7, 0
     ]
 
-    const vertexBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(abc), gl.STATIC_DRAW)
+    gl.bufferData(gl.ARRAY_BUFFER, 8 * 200000, gl.STATIC_DRAW)
     const position = gl.getAttribLocation(program, 'position')
     gl.enableVertexAttribArray(position)
     gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
 
-    const colorBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
     gl.bufferData(gl.ARRAY_BUFFER, 8 * 200000, gl.STATIC_DRAW)
     const color = gl.getAttribLocation(program, 'color')
