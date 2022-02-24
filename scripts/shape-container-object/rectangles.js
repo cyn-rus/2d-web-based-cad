@@ -34,6 +34,8 @@ class Rectangles{
         this.rectangles.forEach((elmt) => elmt.forEach((elmt1) => rect_array.push(elmt1)))
         this.color.forEach((elmt) => rect_color_array.push(elmt))
 
+        // console.log(rect_array)
+
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(rect_array));
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
