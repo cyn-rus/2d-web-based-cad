@@ -58,12 +58,11 @@ class Rectangles{
     }
 
     move(startXId, startX, startY) {
-        console.log(startXId)
         var startAwal = [this.rectangles[startXId][0], this.rectangles[startXId][1]]
         var endAwal = [this.rectangles[startXId][4], this.rectangles[startXId][5]]
 
-        var startX1 = startX + (startAwal[0] - startX)
-        var startY1 = startY + (startAwal[1] - startY)
+        var startX1 = startX //+ (startAwal[0] - startX)
+        var startY1 = startY //+ (startAwal[1] - startY)
 
         this.rectangles[startXId][0] = startX1
         this.rectangles[startXId][1] = startY1
@@ -78,14 +77,13 @@ class Rectangles{
 
     getClickedRectangleId(x, y) {
         let n = [-1]
-        for (var i = 0; i < this.rectangles; i++){
+        for (let i = 0; i < this.rectangles.length; i++){
             if (x >= this.rectangles[i][0] && x <= this.rectangles[i][4]){
                 if (y <= this.rectangles[i][1] && y >= this.rectangles[i][5]){
-                    n = [i]
+                    n[0] = i
                 }
             }
         }
-        console.log(n)
-        this.moveId = n
+        this.moveId[0] = n[0]
     }
 }
