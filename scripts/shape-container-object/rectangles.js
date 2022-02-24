@@ -3,7 +3,7 @@ class Rectangles{
         this.rectangles = []
         this.start = []
         this.end = []
-        this.move = []
+        this.moveId = [-1]
         this.color = []
         this.cur_color = [0, 0, 0]
     }
@@ -33,8 +33,6 @@ class Rectangles{
         this.rectangles.forEach((elmt) => elmt.forEach((elmt1) => rect_array.push(elmt1)))
         this.color.forEach((elmt) => rect_color_array.push(elmt))
 
-        console.log(rect_array)
-
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(rect_array));
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
@@ -57,5 +55,37 @@ class Rectangles{
             v3[0], v3[1],
             v4[0], v4[1],
         ];
+    }
+
+    move(startXId, startX, startY) {
+        console.log(startXId)
+        var startAwal = [this.rectangles[startXId][0], this.rectangles[startXId][1]]
+        var endAwal = [this.rectangles[startXId][4], this.rectangles[startXId][5]]
+
+        var startX1 = startX + (startAwal[0] - startX)
+        var startY1 = startY + (startAwal[1] - startY)
+
+        this.rectangles[startXId][0] = startX1
+        this.rectangles[startXId][1] = startY1
+        this.rectangles[startXId][4] = (startX1 - startAwal[0]) + endAwal[0]
+        this.rectangles[startXId][5] = (startY1 - startAwal[1]) + endAwal[1]
+
+        this.rectangles[startXId][2] = this.rectangles[startXId][4]
+        this.rectangles[startXId][3] = this.rectangles[startXId][1]
+        this.rectangles[startXId][6] = this.rectangles[startXId][0]
+        this.rectangles[startXId][7] = this.rectangles[startXId][5]
+    }
+
+    getClickedRectangleId(x, y) {
+        let n = [-1]
+        for (var i = 0; i < this.rectangles; i++){
+            if (x >= this.rectangles[i][0] && x <= this.rectangles[i][4]){
+                if (y <= this.rectangles[i][1] && y >= this.rectangles[i][5]){
+                    n = [i]
+                }
+            }
+        }
+        console.log(n)
+        this.moveId = n
     }
 }
