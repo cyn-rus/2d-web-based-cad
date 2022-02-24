@@ -4,6 +4,7 @@ class Rectangles{
         this.start = []
         this.end = []
         this.moveId = [-1]
+        this.moveSelisih = [0,0]
         this.color = []
         this.cur_color = [0, 0, 0]
     }
@@ -61,8 +62,8 @@ class Rectangles{
         var startAwal = [this.rectangles[startXId][0], this.rectangles[startXId][1]]
         var endAwal = [this.rectangles[startXId][4], this.rectangles[startXId][5]]
 
-        var startX1 = startX //+ (startAwal[0] - startX)
-        var startY1 = startY //+ (startAwal[1] - startY)
+        var startX1 = startX + this.moveSelisih[0]
+        var startY1 = startY + this.moveSelisih[1]
 
         this.rectangles[startXId][0] = startX1
         this.rectangles[startXId][1] = startY1
@@ -85,5 +86,10 @@ class Rectangles{
             }
         }
         this.moveId[0] = n[0]
+
+        var startAwal = [this.rectangles[this.moveId[0]][0], this.rectangles[this.moveId[0]][1]]
+        var startX1 = startAwal[0] - x
+        var startY1 = startAwal[1] - y
+        this.moveSelisih = [startX1, startY1]
     }
 }
