@@ -3,7 +3,8 @@ class Squares {
         this.squares = []
         this.start = []
         this.end = []
-        this.moveId = [-1]
+        this.moveId = -1
+        this.resizeId = [-1, -1]
         this.moveSelisih = [0,0]
         this.color = []
         this.cur_color = [0, 0, 0]
@@ -30,7 +31,7 @@ class Squares {
             }
         }
         
-        // Render line yang dibuat sebelumnya
+        // Render square yang dibuat sebelumnya
         this.squares.forEach(elmt => elmt.forEach(elmt1 => square_array.push(elmt1)))
         this.color.forEach(elmt => square_color_array.push(elmt))
         
@@ -60,5 +61,85 @@ class Squares {
             v3[0], v3[1],
             v4[0], v4[1],
         ]
+    }
+
+    move(x, y) {
+        const startAwal = [this.squares[this.moveId][0], this.squares[this.moveId][1]]
+        const endAwal = [this.squares[this.moveId][4], this.squares[this.moveId][5]]
+
+        const startX1 = x + this.moveSelisih[0]
+        const startY1 = y + this.moveSelisih[1]
+
+        this.squares[this.moveId][0] = startX1
+        this.squares[this.moveId][1] = startY1
+        this.squares[this.moveId][4] = (startX1 - startAwal[0]) + endAwal[0]
+        this.squares[this.moveId][5] = (startY1 - startAwal[1]) + endAwal[1]
+
+        this.squares[this.moveId][2] = this.squares[this.moveId][4]
+        this.squares[this.moveId][3] = this.squares[this.moveId][1]
+        this.squares[this.moveId][6] = this.squares[this.moveId][0]
+        this.squares[this.moveId][7] = this.squares[this.moveId][5]
+    }
+
+    resize(x, y) {
+        const id = this.resizeId[0]
+        const currIdx = this.resizeId[1]
+        const oppositeIdx = (currIdx + 4) % 8
+        
+        const endAwal = [this.squares[id][oppositeIdx], this.squares[id][oppositeIdx+1]]
+        
+        const size = Math.min(Math.abs(endAwal[0] - x), Math.abs(endAwal[1] - y))
+        const newX = endAwal[0] + size * (endAwal[0] > x ? -1 : 1)
+        const newY = endAwal[1] + size * (endAwal[1] > y ? -1 : 1)
+
+        this.squares[id][currIdx] = newX
+        this.squares[id][currIdx+1] = newY
+        this.squares[id][(oppositeIdx + 2) % 8] = newX
+        this.squares[id][((oppositeIdx + 2) % 8) + 1] = this.squares[id][oppositeIdx+1]
+        this.squares[id][(currIdx + 2) % 8] = this.squares[id][oppositeIdx]
+        this.squares[id][((currIdx + 2) % 8) + 1] = newY
+    }
+
+    getClickedSquareId(x, y) {
+        for (let i = 0; i < this.squares.length; i++) {
+            if (x >= this.squares[i][0] && x <= this.squares[i][4]) {
+                if (y <= this.squares[i][1] && y >= this.squares[i][5]) {
+                    this.moveId = i
+                    break
+                }
+            }
+        }
+
+        try {
+            const startAwal = [this.squares[this.moveId][0], this.squares[this.moveId][1]]
+            const startX1 = startAwal[0] - x
+            const startY1 = startAwal[1] - y
+            this.moveSelisih = [startX1, startY1]
+        } catch {
+
+        }
+    }
+
+    getPointSquareId(x, y) {
+        let found = false
+        loop:
+            for (let i = 0; i < this.squares.length; i++) {
+                for (let j = 0; j < 8; j+=2) {
+                    if (euclidDistance(x, this.squares[i][j], y, this.squares[i][j+1]) <= 0.015) {
+                        found = true
+                        this.resizeId = [i, j]
+                        break loop
+                    }
+                }
+            }
+
+        try {
+            const startAwal = [this.squares[this.resizeId[0]], this.squares[this.resizeId[1] + 1]]
+            const startX1 = startAwal[0] - x
+            const startY1 = startAwal[1] - y
+            this.moveSelisih = [startX1, startY1]
+        } catch {
+
+        }
     }
 }

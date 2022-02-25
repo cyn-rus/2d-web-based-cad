@@ -82,6 +82,13 @@ canvas.addEventListener('mousedown', (e) => {
                 linesArray.move(x, y)
             }
             break
+        case 5:
+            // Move Square
+            squaresArray.getClickedSquareId(x, y)
+            if (squaresArray.moveId[0] !== -1) {
+                squaresArray.move(x, y)
+            }
+            break
         case 6:
             // Move Rectangle
             rectanglesArray.getClickedRectangleId(x, y)
@@ -95,6 +102,13 @@ canvas.addEventListener('mousedown', (e) => {
             linesArray.getClickedLineId(x, y)
             if (linesArray.moveId[0] !== -1 && linesArray.moveId[1] !== -1) {
                 linesArray.resize(x, y)
+            }
+            break
+        case 8:
+            // Resize Square
+            squaresArray.getPointSquareId(x, y)
+            if (squaresArray.resizeId[0] !== -1 && squaresArray.resizeId[1] !== -1) {
+                squaresArray.resize(x, y)
             }
             break
         default:
@@ -130,6 +144,12 @@ canvas.addEventListener('mousemove', (e) => {
                     linesArray.move(x, y)
                 }
                 break
+            case 5:
+                // Move Square
+                if (squaresArray.moveId[0] !== -1) {
+                    squaresArray.move(x, y)
+                }
+                break
             case 6:
                 // Move Rectangle
                 if (rectanglesArray.moveId[0] != -1){
@@ -140,6 +160,12 @@ canvas.addEventListener('mousemove', (e) => {
                 // Resize Line
                 if (linesArray.moveId[0] !== -1 && linesArray.moveId[1] !== -1) {
                     linesArray.resize(x, y)
+                }
+                break
+            case 8:
+                // Resize Square
+                if (squaresArray.resizeId[0] !== -1 && squaresArray.resizeId[1] !== -1) {
+                    squaresArray.resize(x, y)
                 }
                 break
             default:
@@ -181,6 +207,10 @@ canvas.addEventListener('mouseup', () => {
         case 3:
             // Polygon
             break
+        case 5:
+            // Move Square
+            squaresArray.moveId = [-1, -1]
+            break
         case 4:
             // Move Line
             linesArray.moveId = [-1, -1]
@@ -191,6 +221,9 @@ canvas.addEventListener('mouseup', () => {
             break
         case 7:
             linesArray.moveId = [-1, -1]
+            break
+        case 8:
+            squaresArray.resizeId = [-1, -1]
             break
         default:
             // Change color ???
