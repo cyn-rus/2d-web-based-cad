@@ -22,6 +22,10 @@ class Rectangles{
         var rect_array = []
         var rect_color_array = []
 
+        // Render rectangle yang dibuat sebelumnya
+        this.rectangles.forEach((elmt) => elmt.forEach((elmt1) => rect_array.push(elmt1)))
+        this.color.forEach((elmt) => rect_color_array.push(elmt))
+
         // Render rectangle yang saat ini sedang dibuat
         if (this.start.length > 0){
             this.create().forEach((elmt) => rect_array.push(elmt))
@@ -29,11 +33,6 @@ class Rectangles{
                 this.cur_color.forEach((elmt) => rect_color_array.push(elmt))
             }
         }
-
-        // Render rectangle yang dibuat sebelumnya
-        this.rectangles.forEach((elmt) => elmt.forEach((elmt1) => rect_array.push(elmt1)))
-        this.color.forEach((elmt) => rect_color_array.push(elmt))
-
         console.log(rect_color_array)
 
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
