@@ -23,7 +23,7 @@ class Rectangles{
 
         // Render rectangle yang dibuat sebelumnya
         this.rectangles.forEach((elmt) => elmt.forEach((elmt1) => rect_array.push(elmt1)))
-        this.color.forEach((elmt) => rect_color_array.push(elmt))
+        this.rectangles_colors.forEach((elmt) => rect_color_array.push(elmt))
 
         // Render rectangle yang saat ini sedang dibuat
         if (this.rectangles_starts.length > 0){
