@@ -1,20 +1,19 @@
 class Lines {
     constructor() {
         this.lines = []
-        this.start = []
-        this.end = []
+        this.lines_starts = []
+        this.lines_ends = []
         this.moveId = [-1, -1]
         this.moveSelisih = [0,0]
-        this.color = []
+        this.lines_colors = []
         this.cur_color = [0, 0, 0]
     }
 
     loadlines(data) {
         this.lines = data.lines
-        this.start = data.lines_starts
-        this.end = data.lines_ends
-        this.move = data.lines_moves
-        this.color = data.lines_colors
+        this.lines_starts = data.lines_starts
+        this.lines_ends = data.lines_ends
+        this.lines_colors = data.lines_colors
         this.cur_color = data.cur_color
     }
 
@@ -23,7 +22,7 @@ class Lines {
         const line_color_array = []
 
         // Render line yang saat ini sedang dibuat
-        if (this.start.length > 0) {
+        if (this.lines_starts.length > 0) {
             this.create().forEach(elmt => line_array.push(elmt))
             for (let i = 0; i < 4; i++) {
                 this.cur_color.forEach((elmt) => line_color_array.push(elmt))
@@ -32,7 +31,7 @@ class Lines {
 
         // Render line yang dibuat sebelumnya
         this.lines.forEach(elmt => elmt.forEach(elmt1 => line_array.push(elmt1)))
-        this.color.forEach(elmt => line_color_array.push(elmt))
+        this.lines_colors.forEach(elmt => line_color_array.push(elmt))
 
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(line_array))
@@ -45,8 +44,8 @@ class Lines {
     }
 
     create() {
-        const v1 = this.start
-        const v2 = this.end
+        const v1 = this.lines_starts
+        const v2 = this.lines_ends
 
         return v1.concat(v2)
     }

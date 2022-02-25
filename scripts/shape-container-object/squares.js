@@ -1,21 +1,20 @@
 class Squares {
     constructor() {
         this.squares = []
-        this.start = []
-        this.end = []
+        this.squares_starts = []
+        this.squares_ends = []
         this.moveId = -1
         this.resizeId = [-1, -1]
         this.moveSelisih = [0,0]
-        this.color = []
+        this.squares_colors = []
         this.cur_color = [0, 0, 0]
     }
 
     loadsquares(data) {
         this.squares = data.squares
-        this.start = data.squares_starts
-        this.end = data.squares_ends
-        this.move = data.squares_moves
-        this.color = data.squares_colors
+        this.squares_starts = data.squares_starts
+        this.squares_ends = data.squares_ends
+        this.squares_colors = data.squares_colors
         this.cur_color = data.squares_color
     }
 
@@ -24,7 +23,7 @@ class Squares {
         const square_color_array = []
 
         // Render square yang saat ini sedang dibuat
-        if (this.start.length > 0) {
+        if (this.squares_starts.length > 0) {
             this.create().forEach(elmt => square_array.push(elmt))
             for (let i = 0; i < 4; i++) {
                 this.cur_color.forEach((elmt) => square_color_array.push(elmt))
@@ -33,7 +32,7 @@ class Squares {
         
         // Render square yang dibuat sebelumnya
         this.squares.forEach(elmt => elmt.forEach(elmt1 => square_array.push(elmt1)))
-        this.color.forEach(elmt => square_color_array.push(elmt))
+        this.squares_colors.forEach(elmt => square_color_array.push(elmt))
         
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer)
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(square_array))
@@ -46,11 +45,11 @@ class Squares {
     }
 
     create() {
-        const size = Math.min(Math.abs(this.start[0] - this.end[0]), Math.abs(this.start[1] - this.end[1]))
-        const v3_x = this.start[0] + size * (this.start[0] > this.end[0] ? -1 : 1)
-        const v3_y = this.start[1] + size * (this.start[1] > this.end[1] ? -1 : 1) 
+        const size = Math.min(Math.abs(this.squares_starts[0] - this.squares_ends[0]), Math.abs(this.squares_starts[1] - this.squares_ends[1]))
+        const v3_x = this.squares_starts[0] + size * (this.squares_starts[0] > this.squares_ends[0] ? -1 : 1)
+        const v3_y = this.squares_starts[1] + size * (this.squares_starts[1] > this.squares_ends[1] ? -1 : 1) 
         
-        const v1 = this.start
+        const v1 = this.squares_starts
         const v3 = [v3_x, v3_y]
         const v4 = [v1[0], v3[1]]
         const v2 = [v3[0], v1[1]]

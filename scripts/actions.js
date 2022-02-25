@@ -50,6 +50,44 @@ function render() {
     squaresArray.render()
 }
 
+const upload = document.getElementById('upload')
+const download = document.getElementById('download')
+const fileUploader = document.createElement('input')
+fileUploader.setAttribute('type', 'file')
+
+upload.addEventListener('click', () => {
+    fileUploader.click()
+})
+
+fileUploader.addEventListener('change', (e) => {
+    const fr = new FileReader()
+    const file = e.target.files[0]
+    
+    fr.addEventListener('load', (e) => {
+        try {
+            const data = JSON.parse(e.target.result)
+            linesArray.loadlines(data)
+            squaresArray.loadsquares(data)
+            rectanglesArray.loadrectangles(data)
+            render()
+        } catch (err) {
+            alert('Something went wrong!')
+        }
+    })
+    fr.readAsText(file)
+})
+
+download.addEventListener('click', () => {
+    const element = document.createElement('a')
+    const data = {...linesArray, ...squaresArray, ...rectanglesArray}
+    const strData = 'data:text/json;charset=utf-8, ' + encodeURIComponent(JSON.stringify(data))
+    
+    element.setAttribute('href', strData)
+    element.setAttribute('download', 'data.json')
+    document.body.appendChild(element)
+    element.click()
+})
+
 canvas.addEventListener('mousedown', (e) => {
     mouseclicked = true
     x = -1 + 2*e.offsetX/canvas.width;
@@ -58,19 +96,19 @@ canvas.addEventListener('mousedown', (e) => {
     switch(radioButtonId){
         case 0:
             // Line
-            linesArray.start = [x,y]
-            linesArray.end = [x,y]
+            linesArray.lines_starts = [x,y]
+            linesArray.lines_ends = [x,y]
             break
         case 1:
             // Square
-            squaresArray.start = [x,y]
-            squaresArray.end = [x,y]
+            squaresArray.squares_starts = [x,y]
+            squaresArray.squares_ends = [x,y]
             break
         case 2:
             // Rectangle
             rectanglesArray.cur_color = hexvalue
-            rectanglesArray.start = [x,y]
-            rectanglesArray.end = [x,y]
+            rectanglesArray.rectangles_starts = [x,y]
+            rectanglesArray.rectangles_ends = [x,y]
             break
         case 3:
             // Polygon
@@ -85,14 +123,13 @@ canvas.addEventListener('mousedown', (e) => {
         case 5:
             // Move Square
             squaresArray.getClickedSquareId(x, y)
-            if (squaresArray.moveId[0] !== -1) {
+            if (squaresArray.moveId[0] !== -1 && squaresArray.moveId !== -1) {
                 squaresArray.move(x, y)
             }
             break
         case 6:
             // Move Rectangle
             rectanglesArray.getClickedRectangleId(x, y)
-            console.log(rectanglesArray.moveId[0])
             if (rectanglesArray.moveId[0] != -1){
                 rectanglesArray.move(rectanglesArray.moveId[0], x, y)
             }
@@ -125,15 +162,15 @@ canvas.addEventListener('mousemove', (e) => {
         switch(radioButtonId){
             case 0:
                 // Line
-                linesArray.end = [x,y]
+                linesArray.lines_ends = [x,y]
                 break
             case 1:
                 // Square
-                squaresArray.end = [x,y]
+                squaresArray.squares_ends = [x,y]
                 break
             case 2:
                 // Rectangle
-                rectanglesArray.end = [x,y]
+                rectanglesArray.rectangles_ends = [x,y]
                 break
             case 3:
                 // Polygon
@@ -146,7 +183,7 @@ canvas.addEventListener('mousemove', (e) => {
                 break
             case 5:
                 // Move Square
-                if (squaresArray.moveId[0] !== -1) {
+                if (squaresArray.moveId[0] !== -1 && squaresArray.moveId !== -1) {
                     squaresArray.move(x, y)
                 }
                 break
@@ -182,27 +219,28 @@ canvas.addEventListener('mouseup', () => {
             // Line
             linesArray.lines.push(linesArray.create())
             for (var i = 0; i < 4; ++i) {
-                linesArray.cur_color.forEach(elmt => linesArray.color.push(elmt))
+                linesArray.cur_color.forEach(elmt => linesArray.lines_colors.push(elmt))
             }
-            linesArray.start = []
-            linesArray.end = []
+            linesArray.lines_starts = []
+            linesArray.lines_ends = []
             break
         case 1:
             // Square
             squaresArray.squares.push(squaresArray.create())
             for (var i = 0; i < 4; ++i) {
-                squaresArray.cur_color.forEach(elmt => squaresArray.color.push(elmt))
+                squaresArray.cur_color.forEach(elmt => squaresArray.squares_colors.push(elmt))
             }
-            squaresArray.start = []
+            squaresArray.squares_starts = []
+            squaresArray.squares_ends = []
             break
         case 2:
             // Rectangle
             rectanglesArray.rectangles.push(rectanglesArray.create())
             for (var i = 0; i < 4; ++i){
-                rectanglesArray.cur_color.forEach(elmt => rectanglesArray.color.push(elmt))
+                rectanglesArray.cur_color.forEach(elmt => rectanglesArray.rectangles_colors.push(elmt))
             }
-            rectanglesArray.start = []
-            rectanglesArray.end = []
+            rectanglesArray.rectangles_starts = []
+            rectanglesArray.rectangles_ends = []
             break
         case 3:
             // Polygon
