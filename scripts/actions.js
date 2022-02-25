@@ -52,9 +52,29 @@ function render() {
 
 const upload = document.getElementById('upload')
 const download = document.getElementById('download')
+const fileUploader = document.createElement('input')
+fileUploader.setAttribute('type', 'file')
 
 upload.addEventListener('click', () => {
+    fileUploader.click()
+})
 
+fileUploader.addEventListener('change', (e) => {
+    const fr = new FileReader()
+    const file = e.target.files[0]
+    
+    fr.addEventListener('load', (e) => {
+        try {
+            const data = JSON.parse(e.target.result)
+            linesArray.loadlines(data)
+            squaresArray.loadsquares(data)
+            rectanglesArray.loadrectangles(data)
+            render()
+        } catch (err) {
+            alert('Something went wrong!')
+        }
+    })
+    fr.readAsText(file)
 })
 
 download.addEventListener('click', () => {
@@ -103,14 +123,13 @@ canvas.addEventListener('mousedown', (e) => {
         case 5:
             // Move Square
             squaresArray.getClickedSquareId(x, y)
-            if (squaresArray.moveId[0] !== -1) {
+            if (squaresArray.moveId[0] !== -1 && squaresArray.moveId !== -1) {
                 squaresArray.move(x, y)
             }
             break
         case 6:
             // Move Rectangle
             rectanglesArray.getClickedRectangleId(x, y)
-            console.log(rectanglesArray.moveId[0])
             if (rectanglesArray.moveId[0] != -1){
                 rectanglesArray.move(rectanglesArray.moveId[0], x, y)
             }
@@ -164,7 +183,7 @@ canvas.addEventListener('mousemove', (e) => {
                 break
             case 5:
                 // Move Square
-                if (squaresArray.moveId[0] !== -1) {
+                if (squaresArray.moveId[0] !== -1 && squaresArray.moveId !== -1) {
                     squaresArray.move(x, y)
                 }
                 break
