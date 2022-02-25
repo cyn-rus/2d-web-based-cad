@@ -3,7 +3,6 @@ class Lines {
         this.lines = []
         this.start = []
         this.end = []
-        this.move = []
         this.moveId = [-1, -1]
         this.moveSelisih = [0,0]
         this.color = []
@@ -52,13 +51,22 @@ class Lines {
         return v1.concat(v2)
     }
 
+    move(x, y) {
+        const startAwal = [this.lines[this.moveId[0]][0], this.lines[this.moveId[0]][1]]
+        const endAwal = [this.lines[this.moveId[0]][2], this.lines[this.moveId[0]][3]]
+
+        const startX1 = x + this.moveSelisih[0]
+        const startY1 = y + this.moveSelisih[1]
+
+        this.lines[this.moveId[0]][0] = startX1
+        this.lines[this.moveId[0]][1] = startY1
+        this.lines[this.moveId[0]][2] = (startX1 - startAwal[0]) + endAwal[0]
+        this.lines[this.moveId[0]][3] = (startY1 - startAwal[1]) + endAwal[1]
+    }
+
     resize(x, y) {
         this.lines[this.moveId[0]][this.moveId[1]] = x
         this.lines[this.moveId[0]][this.moveId[1]+1] = y
-    }
-
-    move(x, y) {
-
     }
 
     getClickedLineId(x, y) {
@@ -70,6 +78,15 @@ class Lines {
                 this.moveId = [i, 2]
                 break
             }
+        }
+
+        try {
+            const startAwal = [this.lines[this.moveId[0]][0], this.lines[this.moveId[0]][1]]
+            const startX1 = startAwal[0] - x
+            const startY1 = startAwal[1] - y
+            this.moveSelisih = [startX1, startY1]
+        } catch {
+
         }
         
         // this.moveId = n
