@@ -2,10 +2,13 @@
 // 2. Square
 // 3. Rectangle
 // 4. Polygon
-// 5. Move Shapes
-// 6. Resize Line or Square
-// 7. Change Polygon Color
-// 8. Hex Color
+// 5. Move Line
+// 6. Move Square
+// 7. Move Rectangle
+// 8. Resize Line
+// 9. Resize Square
+// 10. Change Polygon Color
+// 11. Hex Color
 
 
 
@@ -58,7 +61,7 @@ canvas.addEventListener('mousedown', (e) => {
         case 3:
             // Polygon
             break
-        case 4:
+        case 6:
             // Move Rectangle
             rectanglesArray.getClickedRectangleId(x, y)
             console.log(rectanglesArray.moveId[0])
@@ -66,11 +69,12 @@ canvas.addEventListener('mousedown', (e) => {
                 rectanglesArray.move(rectanglesArray.moveId[0], x, y)
             }
             break
-        case 5:
-            // Resize Line or Square
-            break
-        case 6:
-            // Change Polygon Color
+        case 7:
+            // Resize Line
+            linesArray.getClickedLineId(x, y)
+            if (linesArray.moveId[0] !== -1 && linesArray.moveId[1] !== -1) {
+                linesArray.resize(x, y)
+            }
             break
         default:
             // Change color ???
@@ -99,17 +103,17 @@ canvas.addEventListener('mousemove', (e) => {
             case 3:
                 // Polygon
                 break
-            case 4:
+            case 6:
                 // Move Rectangle
                 if (rectanglesArray.moveId[0] != -1){
                     rectanglesArray.move(rectanglesArray.moveId[0], x, y)
                 }
                 break
-            case 5:
-                // Resize Line or Square
-                break
-            case 6:
-                // Change Polygon Color
+            case 7:
+                // Resize Line
+                if (linesArray.moveId[0] !== -1 && linesArray.moveId[1] !== -1) {
+                    linesArray.resize(x, y)
+                }
                 break
             default:
                 // Change color ???
@@ -150,15 +154,12 @@ canvas.addEventListener('mouseup', () => {
         case 3:
             // Polygon
             break
-        case 4:
+        case 6:
             // Move Rectangle
             rectanglesArray.moveId = [-1]
             break
-        case 5:
-            // Resize Line or Square
-            break
-        case 6:
-            // Change Polygon Color
+        case 7:
+            linesArray.moveId = [-1, -1]
             break
         default:
             // Change color ???
