@@ -13,6 +13,7 @@
 
 
 const radioButtons = document.getElementsByTagName('input')
+const colorPicker = document.getElementById('colorPicker')
 
 gl.useProgram(program)
 gl.drawArrays(gl.LINES, 0, 2)
@@ -23,11 +24,24 @@ var squaresArray = new Squares()
 
 let radioButtonId = 0
 let mouseclicked = false
+let hexvalue = [0,0,0]
 
 for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].addEventListener('change', function() {
         radioButtonId = i
     })
+}
+
+colorPicker.addEventListener('change', function(){
+    hexvalue = HEXToVBColor(colorPicker.value)
+})
+
+function HEXToVBColor(rrggbb) {
+    // var bbggrr = rrggbb.substr(5, 2) + rrggbb.substr(3, 2) + rrggbb.substr(1, 2);
+    var rr = rrggbb.substr(1, 2)
+    var gg = rrggbb.substr(3, 2)
+    var bb = rrggbb.substr(5, 2)
+    return [parseInt(rr, 16)/255, parseInt(gg, 16)/255, parseInt(bb, 16)/255];
 }
 
 function render() {
@@ -54,6 +68,7 @@ canvas.addEventListener('mousedown', (e) => {
             break
         case 2:
             // Rectangle
+            rectanglesArray.cur_color = hexvalue
             rectanglesArray.start = [x,y]
             rectanglesArray.end = [x,y]
             break
