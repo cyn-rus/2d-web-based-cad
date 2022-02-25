@@ -85,7 +85,7 @@ function createBuffer() {
     gl.bufferData(gl.ARRAY_BUFFER, 8 * 200000, gl.STATIC_DRAW)
     const color = gl.getAttribLocation(program, 'color')
     gl.enableVertexAttribArray(color)
-    gl.vertexAttribPointer(color, 2, gl.FLOAT, false, 0, 0)
+    gl.vertexAttribPointer(color, 3, gl.FLOAT, false, 0, 0)
 }
 
 init()
