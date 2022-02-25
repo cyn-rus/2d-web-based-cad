@@ -26,7 +26,6 @@ let mouseclicked = false
 
 for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].addEventListener('change', function() {
-        console.log(i)
         radioButtonId = i
     })
 }
@@ -60,6 +59,13 @@ canvas.addEventListener('mousedown', (e) => {
             break
         case 3:
             // Polygon
+            break
+        case 4:
+            // Move Line
+            linesArray.getClickedLineId(x, y)
+            if (linesArray.moveId[0] !== -1 && linesArray.moveId[1] !== -1) {
+                linesArray.move(x, y)
+            }
             break
         case 6:
             // Move Rectangle
@@ -102,6 +108,12 @@ canvas.addEventListener('mousemove', (e) => {
                 break
             case 3:
                 // Polygon
+                break
+            case 4:
+                // Move Line
+                if (linesArray.moveId[0] !== -1 && linesArray.moveId[1] !== -1) {
+                    linesArray.move(x, y)
+                }
                 break
             case 6:
                 // Move Rectangle
@@ -153,6 +165,10 @@ canvas.addEventListener('mouseup', () => {
             break
         case 3:
             // Polygon
+            break
+        case 4:
+            // Move Line
+            linesArray.moveId = [-1, -1]
             break
         case 6:
             // Move Rectangle
