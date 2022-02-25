@@ -1,20 +1,19 @@
 class Rectangles{
     constructor() {
         this.rectangles = []
-        this.start = []
-        this.end = []
+        this.rectangles_starts = []
+        this.rectangles_ends = []
         this.moveId = [-1]
         this.moveSelisih = [0,0]
-        this.color = []
+        this.rectangles_colors = []
         this.cur_color = [0, 0, 0]
     }
 
     loadrectangles(data) {
         this.rectangles = data.rectangles
-        this.start = data.rectangles_starts
-        this.end = data.rectangles_ends
-        this.move = data.rectangles_moves
-        this.color = data.rectangles_colors
+        this.rectangles_starts = data.rectangles_starts
+        this.rectangles_ends = data.rectangles_ends
+        this.rectangles_colors = data.rectangles_colors
         this.cur_color = data.cur_color
     }
 
@@ -23,7 +22,7 @@ class Rectangles{
         var rect_color_array = []
 
         // Render rectangle yang saat ini sedang dibuat
-        if (this.start.length > 0){
+        if (this.rectangles_starts.length > 0){
             this.create().forEach((elmt) => rect_array.push(elmt))
             for(var i = 0; i < 4; i++){
                 this.cur_color.forEach((elmt) => rect_color_array.push(elmt))
@@ -32,7 +31,7 @@ class Rectangles{
 
         // Render rectangle yang dibuat sebelumnya
         this.rectangles.forEach((elmt) => elmt.forEach((elmt1) => rect_array.push(elmt1)))
-        this.color.forEach((elmt) => rect_color_array.push(elmt))
+        this.rectangles_colors.forEach((elmt) => rect_color_array.push(elmt))
 
         console.log(rect_color_array)
 
@@ -47,8 +46,8 @@ class Rectangles{
     }
 
     create() {
-        const v1 = this.start;
-        const v3 = this.end;
+        const v1 = this.rectangles_starts;
+        const v3 = this.rectangles_ends;
         const v4 = [v1[0], v3[1]];
         const v2 = [v3[0], v1[1]];
     
