@@ -120,8 +120,8 @@ canvas.addEventListener('mousedown', (e) => {
             break
         case 4:
             // Move Line
-            linesArray.getClickedLineId(x, y)
-            if (linesArray.moveId[0] !== -1 && linesArray.moveId[1] !== -1) {
+            linesArray.getMoveLineId(x, y)
+            if (linesArray.moveId[0] !== -1) {
                 linesArray.move(x, y)
             }
             break
@@ -182,7 +182,7 @@ canvas.addEventListener('mousemove', (e) => {
                 break
             case 4:
                 // Move Line
-                if (linesArray.moveId[0] !== -1 && linesArray.moveId[1] !== -1) {
+                if (linesArray.moveId[0] !== -1) {
                     linesArray.move(x, y)
                 }
                 break
