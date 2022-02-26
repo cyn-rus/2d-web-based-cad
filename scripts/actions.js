@@ -21,6 +21,7 @@ gl.drawArrays(gl.LINES, 0, 2)
 var rectanglesArray = new Rectangles()
 var linesArray = new Lines()
 var squaresArray = new Squares()
+var polygonsArray = new Polygons()
 
 let radioButtonId = 0
 let mouseclicked = false
@@ -112,6 +113,10 @@ canvas.addEventListener('mousedown', (e) => {
             break
         case 3:
             // Polygon
+            polygonsArray.sudut.push(x);
+            polygonsArray.sudut.push(y);
+            polygonsArray.jumlah_sudut += 1;
+            console.log(x, y, polygonsArray.jumlah_sudut)
             break
         case 4:
             // Move Line
@@ -173,7 +178,7 @@ canvas.addEventListener('mousemove', (e) => {
                 rectanglesArray.rectangles_ends = [x,y]
                 break
             case 3:
-                // Polygon
+                // Polygon todo?
                 break
             case 4:
                 // Move Line
@@ -244,6 +249,9 @@ canvas.addEventListener('mouseup', () => {
             break
         case 3:
             // Polygon
+            polygonsArray.sudut[polygonsArray.jumlah_sudut*2-2] = x;
+            polygonsArray.sudut[polygonsArray.jumlah_sudut*2-1] = y;
+            console.log(x, y, polygonsArray.jumlah_sudut)
             break
         case 5:
             // Move Square
