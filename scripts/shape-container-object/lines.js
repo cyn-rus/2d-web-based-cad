@@ -70,6 +70,7 @@ class Lines {
 
     getClickedLineId(x, y) {
         for (let i = 0; i < this.lines.length; i++) {
+            this.isLineClicked(x, y, this.lines[i])
             if (euclidDistance(x, this.lines[i][0], y, this.lines[i][1]) <= 0.015) {
                 this.moveId = [i, 0]
                 break
@@ -87,16 +88,37 @@ class Lines {
         } catch {
 
         }
-        
-        // this.moveId = n
-        // console.log(this.moveId)
-        // try {
-        //     const startAwal = [this.lines[this.moveId][0], this.lines[this.moveId][1]]
-        //     const startX1 = startAwal[0] - x
-        //     const startY1 = startAwal[1] - y
-        //     this.moveSelisih = [startX1, startY1]
-        // } catch {
+    }
 
-        // }
+    getMoveLineId(x, y) {
+        for (let i = 0; i < this.lines.length; i++) {
+            if (this.isLineClicked(x, y, this.lines[i])) {
+                this.moveId[0] = i
+                break
+            }
+        }
+
+        try {
+            const startAwal = [this.lines[this.moveId[0]][0], this.lines[this.moveId[0]][1]]
+            const startX1 = startAwal[0] - x
+            const startY1 = startAwal[1] - y
+            this.moveSelisih = [startX1, startY1]
+        } catch {
+
+        }
+    }
+
+    isLineClicked(x, y, line) {
+        const deltaX = line[0] - line[2]
+        const deltaY = line[1] - line[3]
+        const m = deltaY / deltaX
+
+        const eq_1 = m * line[0] - m * x + y
+        const eq_2 = m * line[2] - m * x + y
+
+        if (Math.abs(eq_1 - line[1]) <= 0.015 || Math.abs(eq_2 - line[3]) <= 0.015) {
+            return true
+        }
+        return false
     }
 }
