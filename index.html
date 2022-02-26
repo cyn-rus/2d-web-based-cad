@@ -8,8 +8,11 @@
     
     <script type='text/javascript' src='./scripts/init.js' defer></script>
     <script type='text/javascript' src='./scripts/shape-container-object/rectangles.js' defer></script>
+    <script type='text/javascript' src='./scripts/shape-container-object/lines.js' defer></script>
+    <script type='text/javascript' src='./scripts/shape-container-object/squares.js' defer></script>
     <script type='text/javascript' src='./scripts/shape-container-object/polygons.js' defer></script>
     <script type='text/javascript' src='./scripts/actions.js' defer></script>
+    <script type='text/javascript' src='./scripts/utils.js' defer></script>
     
 </head>
 
@@ -26,14 +29,21 @@
             </div>
             <div class='action-choice'>
                 <p>Actions:</p>
-                <input type='radio' name='action' value='move'>Move Shapes
-                <input type='radio' name='action' value='resize'>Resize Line or Square
+                <input type='radio' name='action' value='move-line'>Move Line
+                <input type='radio' name='action' value='move-square'>Move Square
+                <input type='radio' name='action' value='move-rectangle'>Move Rectangle
+                <input type='radio' name='action' value='resize-line'>Resize Line
+                <input type='radio' name='action' value='resize-square'>Resize Square
                 <input type='radio' name='action' value='color'>Change Polygon Color
-                <input type='color' value='#000000'>
+                <input type='color' id='colorPicker' value='#000000'>
+            </div>
+            <div class='file-choice'>
+                <button id="download">Download Architectural Plan</button>
+                <button id="upload">Upload Architectural Plan</button>
             </div>
         </div>
         <div>
-            <canvas id='glCanvas' width='800' height='600'></canvas>
+            <canvas id='glCanvas' width='700' height='700'></canvas>
         </div>
     </main>
 </body>
