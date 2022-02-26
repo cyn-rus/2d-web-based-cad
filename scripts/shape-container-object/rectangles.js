@@ -11,10 +11,10 @@ class Rectangles{
 
     loadrectangles(data) {
         this.rectangles = data.rectangles
-        this.rectangles_starts = data.rectangles_starts
-        this.rectangles_ends = data.rectangles_ends
+        this.rectangles_starts = []
+        this.rectangles_ends = []
         this.rectangles_colors = data.rectangles_colors
-        this.cur_color = data.cur_color
+        this.cur_color = [0, 0, 0]
     }
 
     render() {
