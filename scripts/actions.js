@@ -30,6 +30,9 @@ let hexvalue = [0,0,0]
 for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].addEventListener('change', function() {
         radioButtonId = i
+
+        polygonsArray.create()
+        polygonsArray.reset()
     })
 }
 
@@ -49,6 +52,7 @@ function render() {
     rectanglesArray.render()
     linesArray.render()
     squaresArray.render()
+    polygonsArray.render()
 }
 
 const upload = document.getElementById('upload')
@@ -70,6 +74,7 @@ fileUploader.addEventListener('change', (e) => {
             linesArray.loadlines(data)
             squaresArray.loadsquares(data)
             rectanglesArray.loadrectangles(data)
+            polygonsArray.loadPolygons(data)
             render()
         } catch (err) {
             alert('Something went wrong!')
@@ -80,7 +85,7 @@ fileUploader.addEventListener('change', (e) => {
 
 download.addEventListener('click', () => {
     const element = document.createElement('a')
-    const data = {...linesArray, ...squaresArray, ...rectanglesArray}
+    const data = {...linesArray, ...squaresArray, ...rectanglesArray, ...polygonsArray}
     const strData = 'data:text/json;charset=utf-8, ' + encodeURIComponent(JSON.stringify(data))
     
     element.setAttribute('href', strData)
@@ -113,10 +118,10 @@ canvas.addEventListener('mousedown', (e) => {
             break
         case 3:
             // Polygon
-            polygonsArray.sudut.push(x);
-            polygonsArray.sudut.push(y);
-            polygonsArray.jumlah_sudut += 1;
-            console.log(x, y, polygonsArray.jumlah_sudut)
+            console.log("ayam")
+            polygonsArray.cur_polygon.push([x,y])
+            polygonsArray.cur_color = hexvalue
+            polygonsArray.cur_vertex++
             break
         case 4:
             // Move Line
@@ -249,9 +254,6 @@ canvas.addEventListener('mouseup', () => {
             break
         case 3:
             // Polygon
-            polygonsArray.sudut[polygonsArray.jumlah_sudut*2-2] = x;
-            polygonsArray.sudut[polygonsArray.jumlah_sudut*2-1] = y;
-            console.log(x, y, polygonsArray.jumlah_sudut)
             break
         case 5:
             // Move Square
