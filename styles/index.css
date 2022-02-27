@@ -10,6 +10,8 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-left: 15em;
+    padding-right: 15em;
 }
 
 p {
@@ -39,4 +41,13 @@ input {
 
 canvas {
     background-color: white;
+}
+
+.title {
+    margin-top: 1em;
+    margin-bottom: 0.1em;
+}
+
+.link {
+    margin-bottom: 2em;
 }
