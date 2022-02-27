@@ -26,13 +26,20 @@ var polygonsArray = new Polygons()
 let radioButtonId = 0
 let mouseclicked = false
 let hexvalue = [0,0,0]
+let creatingpolygon = false
 
 for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].addEventListener('change', function() {
         radioButtonId = i
+        if (radioButtonId == 3){
+            creatingpolygon = true
+        }
+        if (radioButtonId != 3 && creatingpolygon == true){
+            polygonsArray.create()
+            polygonsArray.reset()
+            creatingpolygon = false
+        }
 
-        polygonsArray.create()
-        polygonsArray.reset()
     })
 }
 
@@ -118,7 +125,6 @@ canvas.addEventListener('mousedown', (e) => {
             break
         case 3:
             // Polygon
-            console.log("ayam")
             polygonsArray.cur_polygon.push([x,y])
             polygonsArray.cur_color = hexvalue
             polygonsArray.cur_vertex++
@@ -159,7 +165,8 @@ canvas.addEventListener('mousedown', (e) => {
             }
             break
         default:
-            // Change color ???
+            // Change polygon color
+            polygonsArray.colorPolygonById(hexvalue,x,y)
     }
     render()
 })

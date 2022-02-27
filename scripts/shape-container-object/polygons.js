@@ -37,8 +37,8 @@ class Polygons {
             }
         }
 
-        console.log(polygon_array)
-        console.log(polygon_color_array)
+        console.log(this.polygons)
+        console.log(this.colors)
 
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(polygon_array));
@@ -60,8 +60,6 @@ class Polygons {
     create() {
         this.polygons.push(this.cur_polygon)
         this.colors.push(this.cur_color)
-
-        console.log(this.polygons)
     }
 
     reset(){
@@ -70,9 +68,30 @@ class Polygons {
         this.cur_color = [0,0,0]
     }
 
-    move() {
+    getClickedPolygonId(x, y) {
+        var id = -1
+        for (var i = 0; i < this.polygons.length; i++){
+            var panjang = this.polygons[i].length
+            for (var j = 0; j < panjang; j++){
+                if (this.distance(x,y,this.polygons[i][j][0],this.polygons[i][j][1]) < 0.01){
+                    id = i
+                }
+            }
+        }
+        return id
     }
 
-    getClickedPolygonId(x, y) {
+    distance(x,y,vx,vy){
+        var dist = Math.sqrt(((x-vx)**2) + ((y-vy)**2))
+        return dist
+    }
+
+    colorPolygonById(hexvalue,x,y){
+        var id = this.getClickedPolygonId(x,y)
+        console.log(id)
+        if (id != -1){
+            console.log("ayamamamaa")
+            this.colors[id] = hexvalue
+        }
     }
 }
