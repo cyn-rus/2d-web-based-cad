@@ -37,9 +37,6 @@ class Polygons {
             }
         }
 
-        console.log(this.polygons)
-        console.log(this.colors)
-
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array(polygon_array));
         gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
@@ -88,9 +85,7 @@ class Polygons {
 
     colorPolygonById(hexvalue,x,y){
         var id = this.getClickedPolygonId(x,y)
-        console.log(id)
         if (id != -1){
-            console.log("ayamamamaa")
             this.colors[id] = hexvalue
         }
     }
